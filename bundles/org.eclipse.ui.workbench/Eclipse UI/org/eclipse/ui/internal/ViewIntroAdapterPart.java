@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
@@ -32,6 +33,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.internal.e4.compatibility.CompatibilityView;
+import org.eclipse.ui.internal.intro.IIntroConstants;
 import org.eclipse.ui.internal.intro.IntroMessages;
 import org.eclipse.ui.intro.IIntroPart;
 import org.eclipse.ui.intro.IIntroSite;
@@ -173,6 +176,7 @@ public final class ViewIntroAdapterPart extends ViewPart {
 	@Override
 	public void init(IViewSite site, IMemento memento) throws PartInitException {
 		super.init(site);
+		Site = site;
 		Workbench workbench = (Workbench) site.getWorkbenchWindow().getWorkbench();
 		try {
 			introPart = workbench.getWorkbenchIntroManager().createNewIntroPart();
@@ -186,6 +190,47 @@ public final class ViewIntroAdapterPart extends ViewPart {
 			WorkbenchPlugin.log(IntroMessages.Intro_could_not_create_proxy, new Status(IStatus.ERROR,
 					WorkbenchPlugin.PI_WORKBENCH, IStatus.ERROR, IntroMessages.Intro_could_not_create_proxy, e));
 		}
+
+	}
+
+	public static IViewSite Site;
+
+	public static void HideWelcome() {
+		if (Site != null) {
+			ViewIntroAdapterPart viewIntroAdapterPart = getViewIntroAdapterPart(Site);
+			MPartStack introStack = getIntroStack(viewIntroAdapterPart);
+			introStack.getTags().remove(IPresentationEngine.MAXIMIZED);
+		}
+	}
+
+	public static ViewIntroAdapterPart getViewIntroAdapterPart(IViewSite site) {
+		WorkbenchWindow window = (WorkbenchWindow) site.getWorkbenchWindow();
+		MUIElement introPart = window.modelService.find(IIntroConstants.INTRO_VIEW_ID, window.getModel());
+		if (introPart instanceof MPlaceholder) {
+			MPlaceholder introPH = (MPlaceholder) introPart;
+			MPart introModelPart = (MPart) introPH.getRef();
+			CompatibilityView compatView = (CompatibilityView) introModelPart.getObject();
+			if (compatView != null) {
+				Object obj = compatView.getPart();
+				if (obj instanceof ViewIntroAdapterPart)
+					return (ViewIntroAdapterPart) obj;
+			}
+		}
+		return null;
+	}
+
+	public static MPartStack getIntroStack(ViewIntroAdapterPart introAdapter) {
+		ViewSite site = (ViewSite) introAdapter.getViewSite();
+
+		MPart introModelPart = site.getModel();
+		if (introModelPart.getCurSharedRef() != null) {
+			MUIElement introPartParent = introModelPart.getCurSharedRef().getParent();
+			if (introPartParent instanceof MPartStack) {
+				return (MPartStack) introPartParent;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

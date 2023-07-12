@@ -180,6 +180,8 @@ public class WorkbenchIntroManager implements IIntroManager {
 		}
 	}
 
+	public static MPartStack IntroStack;
+
 	@Override
 	public void setIntroStandby(IIntroPart part, boolean standby) {
 		if (introPart == null || !introPart.equals(part)) {
@@ -195,11 +197,17 @@ public class WorkbenchIntroManager implements IIntroManager {
 		if (introStack == null)
 			return;
 
+		IntroStack = introStack;
 		boolean isMaximized = isIntroMaximized(viewIntroAdapterPart);
 		if (!isMaximized && !standby)
 			introStack.getTags().add(IPresentationEngine.MAXIMIZED);
 		else if (isMaximized && standby)
 			introStack.getTags().remove(IPresentationEngine.MAXIMIZED);
+	}
+
+	public static void HideWelcome() {
+		if (IntroStack != null)
+			IntroStack.getTags().remove(IPresentationEngine.MAXIMIZED);
 	}
 
 	private MPartStack getIntroStack(ViewIntroAdapterPart introAdapter) {
