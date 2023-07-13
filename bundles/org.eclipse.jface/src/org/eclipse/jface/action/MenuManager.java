@@ -783,10 +783,13 @@ public class MenuManager extends ContributionManager implements IMenuManager {
 				mi = getMenuItems();
 				int srcIx = 0;
 				int destIx = 0;
-
+				System.out.println(" ----- "); //$NON-NLS-1$
 				for (IContributionItem src : clean) {
 					IContributionItem dest;
-
+					System.out.println(src.getId());
+					if (src.getId() == "viewsShortlist") {
+						System.out.println();
+					}
 					// get corresponding item in SWT widget
 					if (srcIx < mi.length) {
 						dest = (IContributionItem) mi[srcIx].getData();
