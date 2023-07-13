@@ -30,6 +30,7 @@ import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.e4.compatibility.CompatibilityView;
 import org.eclipse.ui.internal.intro.IIntroConstants;
 import org.eclipse.ui.internal.intro.IntroDescriptor;
@@ -200,6 +201,13 @@ public class WorkbenchIntroManager implements IIntroManager {
 			introStack.getTags().add(IPresentationEngine.MAXIMIZED);
 		else if (isMaximized && standby)
 			introStack.getTags().remove(IPresentationEngine.MAXIMIZED);
+	}
+
+	public static void setIntroStandby() {
+		IIntroManager introMng = PlatformUI.getWorkbench().getIntroManager();
+		IIntroPart intro = introMng.getIntro();
+		if (intro != null && !introMng.isIntroStandby(intro))
+			introMng.setIntroStandby(intro, true);
 	}
 
 	private MPartStack getIntroStack(ViewIntroAdapterPart introAdapter) {

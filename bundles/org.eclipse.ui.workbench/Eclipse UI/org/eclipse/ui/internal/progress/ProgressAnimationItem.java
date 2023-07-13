@@ -50,6 +50,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.internal.WorkbenchImages;
+import org.eclipse.ui.internal.WorkbenchIntroManager;
 import org.eclipse.ui.progress.IProgressConstants;
 import org.eclipse.ui.progress.IProgressConstants2;
 import org.eclipse.ui.statushandlers.StatusAdapter;
@@ -106,6 +107,7 @@ public class ProgressAnimationItem extends AnimationItem implements FinishedJobs
 
 	void doAction() {
 
+		WorkbenchIntroManager.setIntroStandby();
 		JobTreeElement[] jobTreeElements = FinishedJobs.getInstance().getKeptElements();
 		// search from end (youngest)
 		for (int i = jobTreeElements.length - 1; i >= 0; i--) {
