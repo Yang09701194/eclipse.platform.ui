@@ -59,6 +59,8 @@ import org.eclipse.ui.commands.IElementReference;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
+import org.eclipse.ui.internal.ShowViewMenu;
+import org.eclipse.ui.internal.WorkbenchIntroManager;
 import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.internal.handlers.HandlerProxy;
 import org.eclipse.ui.internal.menus.CommandMessages;
@@ -783,6 +785,9 @@ public class CommandContributionItem extends ContributionItem {
 
 		try {
 			handlerService.executeCommand(command, event);
+			if (event.widget.getData() instanceof ShowViewMenu) {
+				WorkbenchIntroManager.setIntroStandby();
+			}
 		} catch (ExecutionException | NotDefinedException | NotEnabledException | NotHandledException e) {
 			StatusManager.getManager().handle(StatusUtil.newStatus(IStatus.ERROR, "Failed to execute item " //$NON-NLS-1$
 					+ getId(), e));
