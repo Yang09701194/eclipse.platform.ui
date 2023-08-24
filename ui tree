@@ -1,0 +1,176 @@
+progress start
+
+IDEWindow  layer 1 TrimmedWindowImpl
+null  layer 2 PartSashContainerImpl
+org.eclipse.ui.ide.perspectivestack  layer 3 PerspectiveStackImpl
+org.eclipse.jdt.ui.JavaPerspective  layer 4 PerspectiveImpl
+null  layer 5 PartSashContainerImpl
+left  layer 6 PartStackImpl
+org.eclipse.jdt.ui.PackageExplorer  layer 7 PlaceholderImpl
+org.eclipse.jdt.ui.PackageExplorer  layer 8 PartImpl
+org.eclipse.jdt.ui.TypeHierarchy  layer 7 PlaceholderImpl
+org.eclipse.jdt.ui.TypeHierarchy  layer 8 PartImpl
+org.eclipse.ui.navigator.ProjectExplorer  layer 7 PlaceholderImpl
+org.eclipse.ui.navigator.ProjectExplorer  layer 8 PartImpl
+org.eclipse.jdt.junit.ResultView  layer 7 PlaceholderImpl
+org.eclipse.jdt.junit.ResultView  layer 8 PartImpl
+null  layer 6 PartSashContainerImpl
+null  layer 7 PartSashContainerImpl
+org.eclipse.ui.editorss  layer 8 PlaceholderImpl
+org.eclipse.ui.editorss  layer 9 AreaImpl
+org.eclipse.e4.primaryDataStack  layer 10 PartStackImpl
+right  layer 8 PartStackImpl
+org.eclipse.ui.views.ContentOutline  layer 9 PlaceholderImpl
+org.eclipse.ui.views.ContentOutline  layer 10 PartImpl
+org.eclipse.ui.texteditor.TemplatesView  layer 9 PlaceholderImpl
+org.eclipse.ui.texteditor.TemplatesView  layer 10 PartImpl
+org.eclipse.ui.views.minimap.MinimapView  layer 9 PlaceholderImpl
+org.eclipse.ui.views.minimap.MinimapView  layer 10 PartImpl
+org.eclipse.jdt.bcoview.views.BytecodeOutlineView  layer 9 PlaceholderImpl
+org.eclipse.jdt.bcoview.views.BytecodeOutlineView  layer 10 PartImpl
+org.eclipse.ui.tests.api.MockViewPartInvisibleByDefault  layer 9 PlaceholderImpl
+org.eclipse.ui.tests.api.MockViewPartInvisibleByDefault  layer 10 PartImpl
+org.eclipse.ant.ui.views.AntView  layer 9 PlaceholderImpl
+org.eclipse.ant.ui.views.AntView  layer 10 PartImpl
+bottom  layer 7 PartStackImpl
+org.eclipse.ui.views.ProblemView  layer 8 PlaceholderImpl
+org.eclipse.ui.views.ProblemView  layer 9 PartImpl
+org.eclipse.jdt.ui.JavadocView  layer 8 PlaceholderImpl
+org.eclipse.jdt.ui.JavadocView  layer 9 PartImpl
+org.eclipse.jdt.ui.SourceView  layer 8 PlaceholderImpl
+org.eclipse.jdt.ui.SourceView  layer 9 PartImpl
+org.eclipse.search.ui.views.SearchView  layer 8 PlaceholderImpl
+org.eclipse.search.ui.views.SearchView  layer 9 PartImpl
+org.eclipse.ui.console.ConsoleView  layer 8 PlaceholderImpl
+org.eclipse.ui.console.ConsoleView  layer 9 PartImpl
+org.eclipse.ui.views.BookmarkView  layer 8 PlaceholderImpl
+org.eclipse.ui.views.BookmarkView  layer 9 PartImpl
+org.eclipse.ui.views.ProgressView  layer 8 PlaceholderImpl
+org.eclipse.ui.views.ProgressView  layer 9 PartImpl
+stickyFolderRight  layer 3 PartStackImpl
+org.eclipse.help.ui.HelpView  layer 4 PlaceholderImpl
+org.eclipse.help.ui.HelpView  layer 5 PartImpl
+org.eclipse.ui.internal.introview  layer 4 PlaceholderImpl
+org.eclipse.ui.internal.introview  layer 5 PartImpl
+org.eclipse.ui.cheatsheets.views.CheatSheetView  layer 4 PlaceholderImpl
+org.eclipse.ui.cheatsheets.views.CheatSheetView  layer 5 PartImpl
+org.eclipse.ui.tests.api.MockViewPartMultSticky  layer 4 PlaceholderImpl
+org.eclipse.ui.tests.api.MockViewPartMultSticky  layer 5 PartImpl
+org.eclipse.ui.tests.api.StickyViewRight1  layer 4 PlaceholderImpl
+org.eclipse.ui.tests.api.StickyViewRight1  layer 5 PartImpl
+org.eclipse.ui.tests.api.StickyViewRight2  layer 4 PlaceholderImpl
+org.eclipse.ui.tests.api.StickyViewRight2  layer 5 PartImpl
+org.eclipse.ui.main.toolbar  layer 2 TrimBarImpl
+group.file  layer 3 ToolBarImpl
+group.file  layer 4 ToolBarSeparatorImpl
+org.eclipse.ui.workbench.file  layer 3 ToolBarImpl
+new.group  layer 4 DirectToolItemImpl
+newWizardDropDown  layer 4 DirectToolItemImpl
+new.ext  layer 4 DirectToolItemImpl
+save.group  layer 4 DirectToolItemImpl
+save  layer 4 DirectToolItemImpl
+saveAll  layer 4 DirectToolItemImpl
+save.ext  layer 4 DirectToolItemImpl
+print  layer 4 HandledToolItemImpl
+print.ext  layer 4 DirectToolItemImpl
+build.group  layer 4 DirectToolItemImpl
+build.ext  layer 4 DirectToolItemImpl
+additions  layer 4 DirectToolItemImpl
+group.edit  layer 3 ToolBarImpl
+group.edit  layer 4 ToolBarSeparatorImpl
+org.eclipse.ui.workbench.edit  layer 3 ToolBarImpl
+edit.group  layer 4 DirectToolItemImpl
+undo  layer 4 DirectToolItemImpl
+redo  layer 4 DirectToolItemImpl
+additions  layer 3 ToolBarImpl
+additions  layer 4 ToolBarSeparatorImpl
+org.eclipse.ui.examples.contributions.editor.toolbar  layer 3 ToolBarImpl
+org.eclipse.ui.examples.contributions.editor.delta  layer 4 HandledToolItemImpl
+org.eclipse.ui.examples.contributions.toolbars.sampleToolbar  layer 3 ToolBarImpl
+org.eclipse.ui.examples.contributions.toolbars.globalCommand  layer 4 HandledToolItemImpl
+additions  layer 4 ToolBarSeparatorImpl
+org.eclipse.debug.ui.launch.toolbar  layer 3 ToolBarImpl
+launchGroup  layer 4 ToolBarSeparatorImpl
+org.eclipse.debug.ui.main.toolbar  layer 3 ToolBarImpl
+breakpointGroup  layer 4 ToolBarSeparatorImpl
+threadGroup  layer 4 ToolBarSeparatorImpl
+stepGroup  layer 4 ToolBarSeparatorImpl
+stepIntoGroup  layer 4 ToolBarSeparatorImpl
+stepOverGroup  layer 4 ToolBarSeparatorImpl
+stepReturnGroup  layer 4 ToolBarSeparatorImpl
+emptyStepGroup  layer 4 ToolBarSeparatorImpl
+renderGroup  layer 4 ToolBarSeparatorImpl
+org.eclipse.debug.ui.actions.SkipAllBreakpoints  layer 4 DirectToolItemImpl
+org.eclipse.ui.examples.contributions.group.file  layer 3 ToolBarImpl
+org.eclipse.ui.file.save  layer 4 HandledToolItemImpl
+org.eclipse.ui.file.saveAll  layer 4 HandledToolItemImpl
+ProgressExamples.actionSet  layer 3 ToolBarImpl
+sampleGroup  layer 4 DirectToolItemImpl
+org.eclipse.ui.examples.jobs.actions.SuspendJobManagerAction  layer 4 DirectToolItemImpl
+org.eclipse.core.tools.resources.actionSet  layer 3 ToolBarImpl
+spyGroup  layer 4 DirectToolItemImpl
+org.eclipse.core.tools.countResourcesAction  layer 4 DirectToolItemImpl
+org.eclipse.debug.ui.launchActionSet  layer 3 ToolBarImpl
+debug  layer 4 DirectToolItemImpl
+org.eclipse.debug.internal.ui.actions.DebugDropDownAction  layer 4 DirectToolItemImpl
+org.eclipse.debug.internal.ui.actions.RunDropDownAction  layer 4 DirectToolItemImpl
+org.eclipse.ui.externaltools.ExternalToolMenuDelegateToolbar  layer 4 DirectToolItemImpl
+org.eclipse.jdt.ui.JavaElementCreationActionSet  layer 3 ToolBarImpl
+JavaWizards  layer 4 DirectToolItemImpl
+org.eclipse.jdt.ui.actions.OpenProjectWizard  layer 4 DirectToolItemImpl
+org.eclipse.jdt.ui.actions.OpenPackageWizard  layer 4 DirectToolItemImpl
+org.eclipse.jdt.ui.actions.NewTypeDropDown  layer 4 DirectToolItemImpl
+org.eclipse.search.searchActionSet  layer 3 ToolBarImpl
+Search  layer 4 DirectToolItemImpl
+openType  layer 4 DirectToolItemImpl
+org.eclipse.search.OpenSearchDialogPage  layer 4 DirectToolItemImpl
+org.eclipse.ui.examples.fieldassist.actionSet  layer 3 ToolBarImpl
+exampleGroup  layer 4 DirectToolItemImpl
+org.eclipse.ui.examples.fieldassist.actions.ExampleAction  layer 4 DirectToolItemImpl
+org.eclipse.ui.tests.actionSet125011  layer 3 ToolBarImpl
+workingSets  layer 4 DirectToolItemImpl
+org.eclipse.ui.tests.action125011  layer 4 DirectToolItemImpl
+group.nav  layer 3 ToolBarImpl
+group.nav  layer 4 ToolBarSeparatorImpl
+org.eclipse.ui.workbench.navigate  layer 3 ToolBarImpl
+history.group  layer 4 DirectToolItemImpl
+group.application  layer 4 DirectToolItemImpl
+backardHistory  layer 4 DirectToolItemImpl
+forwardHistory  layer 4 DirectToolItemImpl
+pin.group  layer 4 DirectToolItemImpl
+org.eclipse.ui.window.pinEditor  layer 4 HandledToolItemImpl
+org.eclipse.ui.edit.text.gotoNextAnnotation  layer 4 DirectToolItemImpl
+org.eclipse.ui.edit.text.gotoPreviousAnnotation  layer 4 DirectToolItemImpl
+org.eclipse.ui.edit.text.gotoLastEditPosition  layer 4 DirectToolItemImpl
+org.eclipse.ui.edit.text.gotoNextEditPosition  layer 4 DirectToolItemImpl
+group.editor  layer 3 ToolBarImpl
+group.editor  layer 4 ToolBarSeparatorImpl
+group.help  layer 3 ToolBarImpl
+group.help  layer 4 ToolBarSeparatorImpl
+org.eclipse.ui.workbench.help  layer 3 ToolBarImpl
+group.help  layer 4 DirectToolItemImpl
+group.application  layer 4 DirectToolItemImpl
+PerspectiveSpacer is MToolControl layer 3 ToolControlImpl
+Spacer Glue is MToolControl layer 3 ToolControlImpl
+SearchField is MToolControl layer 3 ToolControlImpl
+Search-PS Glue is MToolControl layer 3 ToolControlImpl
+PerspectiveSwitcher is MToolControl layer 3 ToolControlImpl
+org.eclipse.ui.trim.status  layer 2 TrimBarImpl
+org.eclipse.ui.StatusLine is MToolControl layer 3 ToolControlImpl
+org.eclipse.ui.HeapStatus is MToolControl layer 3 ToolControlImpl
+org.eclipse.ui.ProgressBar is MToolControl layer 3 ToolControlImpl
+org.eclipse.tips.ide.toolbar.status  layer 3 ToolBarImpl
+org.eclipse.tips.ide.tip.tool  layer 4 HandledToolItemImpl
+org.eclipse.ui.examples.contributions.verticalTrim  layer 3 ToolBarImpl
+contributions.trimItem  layer 4 HandledToolItemImpl
+contributions.controlContrib1 is MToolControl layer 4 ToolControlImpl
+contributions.trimItem2  layer 4 HandledToolItemImpl
+org.eclipse.ui.trim.status  layer 3 ToolBarImpl
+org.eclipse.ui.tests.dynamicToolbarContribution is MToolControl layer 4 ToolControlImpl
+org.eclipse.ui.trim.vertical1  layer 2 TrimBarImpl
+org.eclipse.ui.ide.perspectivestack(minimized) is MToolControl layer 3 ToolControlImpl
+org.eclipse.ui.trim.vertical2  layer 2 TrimBarImpl
+right(IDEWindow).(org.eclipse.jdt.ui.JavaPerspective) is MToolControl layer 3 ToolControlImpl
+bottom(IDEWindow).(org.eclipse.jdt.ui.JavaPerspective) is MToolControl layer 3 ToolControlImpl
+org.eclipse.ui.editorss(IDEWindow).(org.eclipse.jdt.ui.JavaPerspective) is MToolControl layer 3 ToolControlImpl
+stickyFolderRight(minimized) is MToolControl layer 3 ToolControlImpl
