@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.PreDestroy;
@@ -76,6 +77,8 @@ import org.eclipse.e4.ui.workbench.modeling.ElementMatcher;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -171,6 +174,16 @@ public class ModelServiceImpl implements EModelService {
 
 	}
 
+	public void resetLayer() {
+		layer = 0;
+	}
+
+	int layer = 0;
+	private Object lock = new Object();
+	ArrayList ids = new ArrayList<>();
+	public boolean isRecordElement = false, stackRecord = false;
+	public LinkedList elementRecursiveStack = new LinkedList<>();
+	public ArrayList allElements = new ArrayList<>();
 	private <T> void findElementsRecursive(MApplicationElement searchRoot, Class<T> clazz,
 			Selector matcher, LinkedHashSet<T> elements, int searchFlags) {
 		Assert.isLegal(searchRoot != null);
@@ -178,12 +191,62 @@ public class ModelServiceImpl implements EModelService {
 			return;
 		}
 
+		synchronized (lock) {
+			if (isRecordElement) {				
+				if (layer == 0) {
+					elementRecursiveStack.clear();
+					allElements.clear();
+				}
+				if (stackRecord) {
+					elementRecursiveStack.add(searchRoot);
+				}
+				allElements.add(searchRoot);
+			}
+			layer++;
+		}
+
+
+		String msg = searchRoot instanceof MToolControl ? " is MToolControl" : " "; //$NON-NLS-1$ //$NON-NLS-2$
+		// String msg2 = ((MUIElement) searchRoot).getWidget() instanceof
+		// org.eclipse.swt.widgets.Shell ? " is Shell" //$NON-NLS-1$
+		String msg2 = (searchRoot) instanceof ToolBar ? " is Tool" //$NON-NLS-1$
+				: " "; //$NON-NLS-1$
+		String msg3 = ((MUIElement)searchRoot).getWidget() instanceof ToolBar ? " is Tool" //$NON-NLS-1$
+				: " "; //$NON-NLS-1$
+		String msg4 = ((MUIElement)searchRoot) instanceof ToolItem ? " is Tool" //$NON-NLS-1$
+				: " "; //$NON-NLS-1$
+		String msg5 = ((MUIElement)searchRoot).getWidget() instanceof ToolItem ? " is Tool" //$NON-NLS-1$
+				: " "; //$NON-NLS-1$
+
+		String msg6 = ""; //$NON-NLS-1$
+		if (msg2 != " " || msg3 != " " || msg4 != " " || msg5 != " ") { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			System.out.println();
+			var v = ((MUIElement) searchRoot).getWidget();
+			System.out.println(v);
+			msg6 = " Widget is ToolItem tooltiptxt " //$NON-NLS-1$
+					+ ((ToolItem) ((MUIElement) searchRoot).getWidget()).getToolTipText();
+		}
+		System.out.println(
+				searchRoot.getElementId() + msg + msg2 + " layer " + layer + " " + searchRoot.getClass().getSimpleName() //$NON-NLS-1$ //$NON-NLS-2$
+						+ msg6);
+
 		// are *we* a match ?
 		boolean classMatch = clazz == null ? true : clazz.isInstance(searchRoot);
 		if (classMatch && matcher.select(searchRoot)) {
 			@SuppressWarnings("unchecked")
 			T element = (T) searchRoot;
 			elements.add(element);
+
+			stackRecord = false;
+
+			if (searchRoot.getElementId() != null &&
+			// searchRoot.getElementId().startsWith("bottom")) { //$NON-NLS-1$
+					searchRoot.getElementId().startsWith("org.eclipse.jdt.ui.JavaPerspective")) { //$NON-NLS-1$
+
+				System.out.println(searchRoot instanceof MUIElement);
+
+			}
+
 		}
 		if (searchRoot instanceof MApplication && (searchFlags == ANYWHERE)) {
 			MApplication app = (MApplication) searchRoot;
@@ -280,6 +343,55 @@ public class ModelServiceImpl implements EModelService {
 				for (MUIElement child : children) {
 					findElementsRecursive(child, clazz, matcher, elements, searchFlags);
 				}
+
+				if (searchRoot.getElementId() != null
+						&&
+						(searchRoot.getElementId().startsWith("bottom")//$NON-NLS-1$
+								|| searchRoot.getElementId().startsWith("org.eclipse.jdt.ui.JavaPerspective")//$NON-NLS-1$
+						)
+						) {
+
+					try {
+						if (!ids.contains(searchRoot.getElementId())) {
+//							((MUIElement) searchRoot).setOnTop(true);
+//							((MUIElement) searchRoot).setVisible(true);
+////							var v = ((MUIElement) searchRoot).getWidget();
+////							System.out.println(v);
+//							bringToTop((MUIElement) searchRoot);
+//							searchRoot.getTags().add("MinimizedAndShowing"); //$NON-NLS-1$
+//							searchRoot.getTags().add("active"); //$NON-NLS-1$
+//							searchRoot.getTags().add("shellMaximized"); //$NON-NLS-1$
+//							searchRoot.getTags().add("shellTopLevel"); //$NON-NLS-1$
+//							searchRoot.getTags().add("Maximized"); //$NON-NLS-1$
+//							searchRoot.getTags().remove("Minimized"); //$NON-NLS-1$
+//							((MElementContainer) searchRoot).setToBeRendered(true);
+//
+//							for (MUIElement child : children) {
+//								if (!ids.contains(child.getElementId())) {
+//									ids.add(child.getElementId());
+//									bringToTop(child);
+//									child.setOnTop(true);
+//									child.setVisible(true);
+//									child.getTags().add("MinimizedAndShowing"); //$NON-NLS-1$
+//									child.getTags().add("active"); //$NON-NLS-1$
+//									child.getTags().add("shellMaximized"); //$NON-NLS-1$
+//									child.getTags().add("shellTopLevel"); //$NON-NLS-1$
+//									child.getTags().add("Maximized"); //$NON-NLS-1$
+//									child.getTags().remove("Minimized"); //$NON-NLS-1$
+//
+//									child.setToBeRendered(true);
+//								}
+//
+//							}
+							ids.add(searchRoot.getElementId());
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						// TODO: handle exception
+					}
+
+				}
+
 			}
 		}
 
@@ -343,6 +455,20 @@ public class ModelServiceImpl implements EModelService {
 				for (MHandler child : part.getHandlers()) {
 					findElementsRecursive(child, clazz, matcher, elements, searchFlags);
 				}
+			}
+		}
+
+		synchronized (lock) {
+			if (isRecordElement && stackRecord) {
+				if (layer > 0) {
+					elementRecursiveStack.removeLast();
+				}
+			}
+			layer--;
+			//System.out.println("layer " + layer); //$NON-NLS-1$
+
+			if (layer == 0) {
+				ids.clear();
 			}
 		}
 	}
@@ -610,6 +736,7 @@ public class ModelServiceImpl implements EModelService {
 
 	@Override
 	public void bringToTop(MUIElement element) {
+		System.out.println("bringToTop(MUIElement element) {"); //$NON-NLS-1$
 		if (element instanceof MApplication) {
 			return;
 		}

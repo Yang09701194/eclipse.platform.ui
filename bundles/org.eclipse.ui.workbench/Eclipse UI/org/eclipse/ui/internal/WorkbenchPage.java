@@ -49,6 +49,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -92,6 +93,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
+import org.eclipse.e4.ui.workbench.addons.minmax.TrimStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
@@ -1235,7 +1237,88 @@ public class WorkbenchPage implements IWorkbenchPage {
 
 		part = showPart(mode, part);
 
+		var element = part;
+		System.out.println("\n\nprogress start\n\n"); //$NON-NLS-1$
+		try {
+			MWindow window = modelService.getTopLevelWindowFor(element);
+			// String trimId = getTrimId(element, MinMaxAddonUtil.getWindowFor(element));
+			// System.out.println(trimId);
+			MToolControl mtControl = null;// (MToolControl) modelService.find(trimId, window);
+			if (mtControl == null || mtControl.getObject() == null) {
+				// try legacy id
+				// trimId = TrimStackIdHelper.createTrimStackId(element,
+				// modelService.getPerspectiveFor(element), null);
+				ModelServiceImpl modelServiceI = (ModelServiceImpl) modelService;
+				modelServiceI.resetLayer();
+				modelServiceI.stackRecord = true;
+				modelServiceI.isRecordElement = true;
+				var foundElement = modelService.find(element.getElementId(), window);
+				if (foundElement != null) {
+					var elementStack = new ArrayList<>(modelServiceI.elementRecursiveStack);
+					if (elementStack.size() > 3) {
+						// var perspective = elementStack.get(3);
+						// String elementId = ((MUIElement) perspective).getElementId();
+						List search = (List) modelServiceI.allElements.stream()
+								.filter(j -> (j instanceof MToolControl)
+								// && ((MUIElement) j).getElementId() != null
+								// && ((MUIElement) j).getElementId().indexOf(elementId) >= 0
+								// && ((MToolControl) j).getObject() != null
+								)
+								.collect(Collectors.toList());
+						HashMap m = new HashMap<MToolControl, Object>();
+						for (var s : search) {
+							m.put(s, ((MToolControl) s).getObject());
+						}
+						@SuppressWarnings("restriction")
+						List search3 = (List) modelServiceI.allElements.stream()
+								.filter(j -> (j instanceof MUIElement)
+										&& (((MUIElement) j).getWidget() instanceof MToolControl
+												|| ((MUIElement) j).getWidget() instanceof TrimStack)
+								// && ((MToolControl) j).getObject() != null
+								).collect(Collectors.toList());
+						System.out.println(search3);
+						System.out.println(TrimStack.ls);
+						if (elementStack.size() > 6) {
+							String elementId2 = ((MUIElement) elementStack.get(6)).getElementId();
+							var search2 = (List) search.stream()
+									.filter(j -> ((MUIElement) j).getElementId().indexOf(elementId2) >= 0)
+									.collect(Collectors.toList());
+							if (!search2.isEmpty()) {
+								search = search2;
+							}
+						}
+						if (search.size() > 0 && search.get(0) instanceof MToolControl) {
+							mtControl = (MToolControl) search.get(0);
+							if (mtControl == null || mtControl.getObject() == null) {
+								// if (element instanceof MPerspectiveStack) {
+									element.setVisible(true);
+								// }
+								System.out.println(mtControl.getWidget() instanceof TrimStack);
+								System.out.println();
+							} else {
+								TrimStack ts = (TrimStack) mtControl.getObject();
+								ts.showStack(true);
+							}
+						}
+					}
+				}
+				modelServiceI.stackRecord = false;
+				modelServiceI.isRecordElement = false;
+				System.out.println("\n\nprogress end\n\n"); //$NON-NLS-1$
+
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+
 		ViewReference ref = getViewReference(part);
+//		part.setOnTop(true);
+//		System.out.println(b);
+//		((Composite) v2).moveAbove(null);
+//		System.out.println(b);
+
 		if (ref == null) {
 			throw new PartInitException(NLS.bind(WorkbenchMessages.ViewFactory_initException, viewId));
 		}
@@ -1293,6 +1376,49 @@ public class WorkbenchPage implements IWorkbenchPage {
 		}
 		return part;
 	}
+
+//	private String getTrimId(MUIElement element, MWindow window) {
+//		String trimId;
+//		if (MinMaxAddonUtil.isPartOfMinMaxChildrenArea(element)) {
+//			trimId = TrimStackIdHelper.createTrimStackId(element, null, window);
+//		} else {
+//			trimId = TrimStackIdHelper.createTrimStackId(element, modelService.getPerspectiveFor(element), window);
+//		}
+//		return trimId;
+//	}
+
+//	private MUIElement findElement(String eleId) {
+//		MUIElement result;
+//		List<MPerspectiveStack> ps = modelService.findElements(window, null, MPerspectiveStack.class);
+//		if (ps.isEmpty()) {
+//			String toolControlId = eleId;
+//			int index = toolControlId.indexOf('(');
+//			String stackId = toolControlId.substring(0, index);
+//			result = modelService.find(stackId, window);
+//		} else {
+//			String toolControlId = eleId;
+//			Map<TrimStackIdPart, String> parsedIds = TrimStackIdHelper.parseTrimStackId(toolControlId);
+//
+//			String stackId = parsedIds.get(TrimStackIdPart.ELEMENT_ID);
+//			String perspId = parsedIds.get(TrimStackIdPart.PERSPECTIVE_ID);
+//
+//			MPerspective persp = null;
+//			if (perspId != null) {
+//				List<MPerspective> perspectives = modelService.findElements(ps.get(0), perspId, MPerspective.class);
+//				if (perspectives != null && !perspectives.isEmpty()) {
+//					persp = perspectives.get(0);
+//				}
+//			}
+//
+//			if (persp != null) {
+//				result = modelService.find(stackId, persp);
+//			} else {
+//				result = modelService.find(stackId, window);
+//			}
+//		}
+//
+//		return result;
+//	}
 
 	/**
 	 * Returns whether a part exists in the current page.
